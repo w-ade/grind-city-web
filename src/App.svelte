@@ -1,28 +1,50 @@
 <script>
   import CardList from "./Cards.svelte";
   import Card from "./lib/components/Card.svelte";
+  import CardHoverTilt from "./lib/components/CardHoverTilt.svelte";
   import { PLAYERS } from "./lib/data/players.js";
+
+  // ?engine=hovertilt → heroes-only test on simey's hover-tilt web component
+  const engine = new URLSearchParams(location.search).get("engine");
+  const heroes = PLAYERS.slice(0, 4);
 </script>
 
 <main>
   <header>
     <h1>GRIND CITY</h1>
     <p class="sub">Memphis roster · chase cards</p>
-    <p class="hint">Tap a card to take a closer look — on a phone, tilt it.</p>
+    <p class="hint">
+      {#if engine === "hovertilt"}hover-tilt engine (heroes) — hover a card{:else}Tap a card to take a closer look — on a phone, tilt it.{/if}
+    </p>
   </header>
 
-  <CardList>
-    {#each PLAYERS as p (p.key)}
-      <Card
-        name={p.name}
-        number={p.num}
-        pos={p.pos}
-        foil={p.foil}
-        grad={p.grad}
-        stock={p.stock}
-      />
-    {/each}
-  </CardList>
+  {#if engine === "hovertilt"}
+    <section class="ht-grid">
+      {#each heroes as p (p.key)}
+        <CardHoverTilt
+          name={p.name}
+          number={p.num}
+          pos={p.pos}
+          foil={p.foil}
+          grad={p.grad}
+          stock={p.stock}
+        />
+      {/each}
+    </section>
+  {:else}
+    <CardList>
+      {#each PLAYERS as p (p.key)}
+        <Card
+          name={p.name}
+          number={p.num}
+          pos={p.pos}
+          foil={p.foil}
+          grad={p.grad}
+          stock={p.stock}
+        />
+      {/each}
+    </CardList>
+  {/if}
 
   <footer>
     Holographic effect engine forked from
@@ -46,6 +68,14 @@
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px 120px;
+  }
+
+  .ht-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 48px 40px;
+    padding: 40px 0;
   }
 
   header {

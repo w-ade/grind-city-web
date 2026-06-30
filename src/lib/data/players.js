@@ -24,11 +24,11 @@ export const PLAYERS = [
   },
   {
     key: 'karim', name: 'Karim Lopez', pos: 'Forward', num: '',
-    grad: ['#06351F', '#0E7A47', '#19A35E'], stock: '#0A4E2E', foil: 'verde',
+    grad: ['#0E5E58', '#00B2A9', '#3FD3C6'], stock: '#8E1A28', foil: 'teal',
   },
   {
     key: 'scotty', name: 'Scotty Pippen Jr.', pos: 'Guard', num: '1',
-    grad: ['#0E5E58', '#00B2A9', '#3FD3C6'], stock: '#8E1A28', foil: 'teal',
+    grad: ['#06351F', '#0E7A47', '#19A35E'], stock: '#0A4E2E', foil: 'verde',
   },
   {
     key: 'gg', name: 'GG Jackson', pos: 'Forward', num: '45',
