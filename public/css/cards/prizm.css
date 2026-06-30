@@ -1,0 +1,129 @@
+/*
+
+  GRIND CITY — PRIZM REFRACTORS
+
+  Full-bleed holographic foils keyed to Grizzlies-era palettes. Built on
+  simey's rainbow/secret technique (layered glitter + prism gradients whose
+  background-position is driven by the --pointer vars), but team-tinted and
+  UNCLIPPED — sports refractors cover the whole card, not a pokemon art window.
+
+  Driven by [data-foil="navy|teal|gold|verde|amethyst"]; each palette sets
+  --p1..--p7 (the prism color bands). One parametric block, five colorways.
+
+*/
+
+
+/*  SHINE — base prism pass  */
+
+.card[data-foil] .card__shine {
+
+  background-image:
+    linear-gradient(-45deg, var(--p1), var(--p5)),
+    var(--glitter),
+    linear-gradient( -30deg,
+      var(--p1), var(--p2), var(--p3), var(--p4), var(--p5), var(--p6), var(--p7),
+      var(--p1), var(--p2), var(--p3), var(--p4), var(--p5), var(--p6), var(--p7),
+      var(--p1), var(--p2), var(--p3), var(--p4), var(--p5), var(--p6), var(--p7),
+      var(--p1)
+    );
+
+  background-blend-mode: luminosity, soft-light;
+
+  background-size:
+    200% 200%,
+    var(--glittersize) var(--glittersize),
+    400% 400%;
+
+  background-position:
+    calc( 25% + (50% * var(--pointer-from-left) )) calc( 25% + (50% * var(--pointer-from-top) )),
+    center center,
+    calc( 25% + (var(--pointer-x) / 2 ) ) calc( 25% + (var(--pointer-y) / 2 ) );
+
+  filter: brightness(calc((var(--pointer-from-center)*0.25) + 0.6)) contrast(2.1) saturate(0.85);
+
+}
+
+/*  SHINE — second prism pass, color-dodged for the refractor flare  */
+
+.card[data-foil] .card__shine:after {
+
+  content: "";
+
+  -webkit-mask-image: none !important;
+  mask-image: none !important;
+
+  background-image:
+    var(--glitter),
+    linear-gradient( -60deg,
+      var(--p1), var(--p2), var(--p3), var(--p4), var(--p5), var(--p6), var(--p7),
+      var(--p1), var(--p2), var(--p3), var(--p4), var(--p5), var(--p6), var(--p7),
+      var(--p1), var(--p2), var(--p3), var(--p4), var(--p5), var(--p6), var(--p7),
+      var(--p1)
+    );
+
+  background-blend-mode: soft-light;
+  background-size: var(--glittersize) var(--glittersize), 400% 400%;
+  background-position: center center, var(--pointer-x) var(--pointer-y);
+
+  filter: brightness(calc((var(--pointer-from-center)*0.3) + 0.55)) contrast(1.9) saturate(1);
+  mix-blend-mode: color-dodge;
+
+}
+
+
+/*  GLARE — specular smear at the pointer  */
+
+.card[data-foil] .card__glare {
+
+  background-image:
+    radial-gradient(
+      farthest-corner circle at var(--pointer-x) var(--pointer-y),
+      hsl(0,0%,85%),
+      hsla(0, 0%, 82%, 0.25) 30%,
+      hsl(220, 12%, 22%) 120%
+    );
+
+  filter: brightness(.9) contrast(1.7);
+  opacity: calc( var(--pointer-from-center) * 0.85 );
+  mix-blend-mode: hard-light;
+
+}
+
+
+/*  PALETTES — Grizzlies eras  */
+
+/* Beale Street navy/powder + a gold fleck (2005–18, Association) */
+.card[data-foil="navy"] {
+  --p1: hsl(222, 45%, 42%); --p2: hsl(212, 55%, 56%); --p3: hsl(202, 62%, 74%);
+  --p4: hsl(46, 72%, 64%);  --p5: hsl(210, 42%, 50%); --p6: hsl(230, 42%, 46%);
+  --p7: hsl(250, 36%, 44%);
+}
+
+/* Vancouver teal/bronze/cream + a red pop (2002–04) */
+.card[data-foil="teal"] {
+  --p1: hsl(176, 70%, 42%); --p2: hsl(166, 58%, 56%); --p3: hsl(40, 56%, 62%);
+  --p4: hsl(28, 52%, 54%);  --p5: hsl(176, 66%, 46%); --p6: hsl(190, 56%, 56%);
+  --p7: hsl(350, 56%, 50%);
+}
+
+/* Grizzlies gold refractor — needs light/dark spread (cream highlight + bronze
+   shadow) so the prism banding reads instead of a flat yellow fill */
+.card[data-foil="gold"] {
+  --p1: hsl(42, 70%, 44%);  --p2: hsl(50, 95%, 66%); --p3: hsl(54, 100%, 90%);
+  --p4: hsl(34, 75%, 48%);  --p5: hsl(48, 95%, 72%); --p6: hsl(38, 58%, 38%);
+  --p7: hsl(52, 100%, 84%);
+}
+
+/* Verde / earth-day green */
+.card[data-foil="verde"] {
+  --p1: hsl(150, 66%, 40%); --p2: hsl(140, 56%, 52%); --p3: hsl(118, 52%, 56%);
+  --p4: hsl(95, 56%, 56%);  --p5: hsl(160, 60%, 44%); --p6: hsl(172, 52%, 46%);
+  --p7: hsl(142, 56%, 42%);
+}
+
+/* Amethyst / violet (Wade's purple, the deck's loudest refractor) */
+.card[data-foil="amethyst"] {
+  --p1: hsl(270, 62%, 46%); --p2: hsl(288, 62%, 56%); --p3: hsl(318, 66%, 60%);
+  --p4: hsl(340, 72%, 62%); --p5: hsl(270, 62%, 52%); --p6: hsl(255, 56%, 50%);
+  --p7: hsl(280, 62%, 54%);
+}
